@@ -2,5 +2,3 @@ package Java;
 /*
 
 */
-// class Solution{
-// }
