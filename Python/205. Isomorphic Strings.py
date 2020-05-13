@@ -44,7 +44,7 @@
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
         # 同构字符串指的是每个字母出现的首个位置相同
-        return [*map(s.index, s)] == [*map(t.index, t)]
+        return list(*map(s.index, s)) == list(*map(t.index, t))
         
 # @lc code=end
 
