@@ -2,3 +2,4 @@ bin
 .vscode
 .idea
 Rust/target
+Python/__pycache__
