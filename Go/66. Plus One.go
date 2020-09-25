@@ -16,7 +16,7 @@ func plusOne(digits []int) []int {
 	length := len(digits)
 	list := []int{1}
 	list[0] = 1
-	for i := length-1; i >= 0; i-- {
+	for i := length - 1; i >= 0; i-- {
 		digits[i]++
 		if digits[i]%10 != 0 {
 			return digits
