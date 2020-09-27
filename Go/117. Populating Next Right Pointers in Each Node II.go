@@ -14,35 +14,35 @@ package main
 // 初始状态下，所有 next 指针都被设置为 NULL。
 
 ///Definition for a Node.
-type Node struct {
-	Val   int
-	Left  *Node
-	Right *Node
-	Next  *Node
-}
+// type Node struct {
+// 	Val   int
+// 	Left  *Node
+// 	Right *Node
+// 	Next  *Node
+// }
 
-func connect(root *Node) *Node {
-	if root == nil {
-		return nil
-	}
-	queue := []*Node{root}
-	for len(queue) > 0 {
-		temp := queue
-		queue = nil
-		for index, node := range temp {
-			if index+1 < len(temp) {
-				node.Next = temp[index+1]
-			}
-			if node.Left != nil {
-				queue = append(queue, node.Left)
-			}
-			if node.Right != nil {
-				queue = append(queue, node.Right)
-			}
-		}
-	}
-	return root
-}
+// func connect(root *Node) *Node {
+// 	if root == nil {
+// 		return nil
+// 	}
+// 	queue := []*Node{root}
+// 	for len(queue) > 0 {
+// 		temp := queue
+// 		queue = nil
+// 		for index, node := range temp {
+// 			if index+1 < len(temp) {
+// 				node.Next = temp[index+1]
+// 			}
+// 			if node.Left != nil {
+// 				queue = append(queue, node.Left)
+// 			}
+// 			if node.Right != nil {
+// 				queue = append(queue, node.Right)
+// 			}
+// 		}
+// 	}
+// 	return root
+// }
 
 // func main() {
 // 	fmt.Println("Hello World!")
