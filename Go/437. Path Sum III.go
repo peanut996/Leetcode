@@ -24,7 +24,7 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 3.  -3 -> 11
 */
 // 双递归
-func pathSum(root *TreeNode, sum int) int {
+func pathSumIII(root *TreeNode, sum int) int {
 	var helper func(root *TreeNode, sum int) int
 	// 递归判断某一个节点的所有路径
 	helper = func(root *TreeNode, sum int) int {
@@ -41,6 +41,6 @@ func pathSum(root *TreeNode, sum int) int {
 		return 0
 	}
 	// 判断所有结点
-	return helper(root, sum) + pathSum(root.Left, sum) + pathSum(root.Right, sum)
+	return helper(root, sum) + pathSumIII(root.Left, sum) + pathSumIII(root.Right, sum)
 
 }

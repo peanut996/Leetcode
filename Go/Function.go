@@ -1,15 +1,15 @@
 package main
 
-// Return Max int
-func max(a, b int) int {
+//Max Return Max int
+func Max(a, b int) int {
 	if a > b {
 		return a
 	}
 	return b
 }
 
-// Return min int
-func min(a, b int) int {
+//Min Return min int
+func Min(a, b int) int {
 	if a < b {
 		return a
 	}
@@ -20,21 +20,21 @@ func min(a, b int) int {
  * Functions for tree.
  */
 
-// Create a tree with two nil son.
-func createTreeNode(val int) *TreeNode {
+// CreateTreeNode a tree with two nil son.
+func CreateTreeNode(val int) *TreeNode {
 	return &TreeNode{
 		Val:   val,
 		Left:  nil,
 		Right: nil}
 }
 
-//Function for creating a Complete Binary Tree from Slice
-func createTreefromSlice(nums []int) *TreeNode {
+//CreateTreefromSlice for creating a Complete Binary Tree from Slice
+func CreateTreefromSlice(nums []int) *TreeNode {
 	length := len(nums)
 	if length == 0 {
 		return nil
 	}
-	head := createTreeNode(nums[0])
+	head := CreateTreeNode(nums[0])
 	queue := []*TreeNode{}
 	queue = append(queue, head)
 	for i := 1; i < length; {
@@ -47,8 +47,8 @@ func createTreefromSlice(nums []int) *TreeNode {
 			queue = queue[1:]
 
 			//判定是否为空结点
-			if nums[i] != -1 {
-				node.Left = createTreeNode(nums[i])
+			if nums[i] != -1000 {
+				node.Left = CreateTreeNode(nums[i])
 				queue = append(queue, node.Left)
 			}
 			i++
@@ -59,8 +59,8 @@ func createTreefromSlice(nums []int) *TreeNode {
 			}
 
 			//判断是否为空结点
-			if nums[i] != -1 {
-				node.Right = createTreeNode(nums[i])
+			if nums[i] != -1000 {
+				node.Right = CreateTreeNode(nums[i])
 				queue = append(queue, node.Right)
 			}
 			i++
@@ -71,7 +71,9 @@ func createTreefromSlice(nums []int) *TreeNode {
 	}
 	return head
 }
-func getSliceFromTree(root *TreeNode) []int {
+
+// GetSliceFromTree return a Slice
+func GetSliceFromTree(root *TreeNode) []int {
 	nums := []int{}
 	if root == nil {
 		return nums
@@ -97,12 +99,12 @@ func getSliceFromTree(root *TreeNode) []int {
 	return nums
 }
 
-// Return the max height of a tree.
-func height(root *TreeNode) int {
+//Height Return the max height of a tree.
+func Height(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-	left, right := height(root.Left), height(root.Right)
+	left, right := Height(root.Left), Height(root.Right)
 	if left > right {
 		return left + 1
 	}

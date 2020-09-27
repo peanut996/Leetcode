@@ -24,11 +24,11 @@ func lengthOfLIS(nums []int) int {
 		for j := 0; j < i; j++ {
 			if nums[j] < nums[i] {
 				//动态规划体现 转移方程nums[i]>nums[j] dp[i]=max(dp[i],dp[j]+1)
-				dp[i] = max(dp[i], dp[j]+1)
+				dp[i] = Max(dp[i], dp[j]+1)
 			}
 		}
 		// max函数已定义于Function.go中
-		result = max(dp[i], result)
+		result = Max(dp[i], result)
 	}
 	return result
 }
