@@ -4,3 +4,4 @@ bin
 Rust/target
 Rust/Cargo.lock
 Python/__pycache__
+pythonenv3.8
