@@ -17,7 +17,7 @@ class Solution:
                 num.append(b)
             else:
                 alpha.append(b)
-        num_length,alpha_length = len(num),len(alpha_length)
+        num_length,alpha_length = len(num),len(alpha)
         if abs(len(num)-len(alpha))>1:
             return ''
         res = []
