@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func verifyPostorder(postorder []int) bool {
 	var helper func(i, j int) bool
@@ -19,7 +21,7 @@ func verifyPostorder(postorder []int) bool {
 
 		return pointer == j && helper(i, mid-1) && helper(mid, j-1)
 	}
-	return helper(0,len(postorder)-1)
+	return helper(0, len(postorder)-1)
 }
 func main() {
 	fmt.Println("Hello World!")
