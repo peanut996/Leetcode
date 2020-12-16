@@ -81,9 +81,29 @@ class Solution {
         });
         return set.size() <= 1;
     }
+    public static int maxOperations(int[] nums, int k) {
+        int res = 0;
+        Arrays.sort(nums);
+        int length = nums.length;
+        int left=0,right=length-1;
+        while(left < right) {
+            int tmp = nums[left]+nums[right];
+            if (tmp == k ) {
+                left++;right--; res +=1;
+            }else if(tmp > k){
+                right--;
+            }else{
+                left++;
+            }
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
-        Solution s = new Solution();
-        System.out.println(s.replaceSpaces("ds sdfs afs sdfa dfssf asdf             ", 27));
+        // nums = [1,2,3,4], k = 5
+        int[] nums = new int[]{1,2,3,4};
+        int k = 5;
+        // Solution s = new Solution();
+        System.out.println(Solution.maxOperations(nums, k));
     }
 }
