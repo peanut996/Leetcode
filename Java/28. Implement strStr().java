@@ -1,4 +1,3 @@
-package Java;
 /*28. Implement strStr()
 实现 strStr() 函数。
 

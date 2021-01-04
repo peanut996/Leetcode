@@ -1,5 +1,3 @@
-package Java;
-
 // import java.util.Arrays;
 
 /*912. Sort an Array
