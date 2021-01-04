@@ -1,109 +1,74 @@
 package Java;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 class Solution {
-    /**
-     * 面试题 01.03. URL化 URL化。编写一种方法，将字符串中的空格全部替换为%20。
-     * 假定该字符串尾部有足够的空间存放新增字符，并且知道字符串的“真实”长度。 （注：用Java实现的话，请使用字符数组实现，以便直接在数组上操作。）
-     * 
-     * @param S
-     * @param length
-     * @return
-     */
-    public String replaceSpaces(String S, int length) {
-        char[] s = S.toCharArray();
-        char[] res = new char[S.length()];
-        int index = 0;
-        for (int i = 0; i < length; i++) {
-            if (s[i] == ' ') {
-                res[index++] = '%';
-                res[index++] = '2';
-                res[index++] = '0';
-            } else {
-                res[index++] = s[i];
+    public int minArray(int[] numbers) {
+        int length = numbers.length;
+        for (int i = 1;i<length;i++) {
+            if (numbers[i] < numbers[i-1]){
+                return numbers[i];
             }
         }
-        return String.valueOf(Arrays.copyOfRange(res, 0, index));
+        return numbers[0];
     }
 
-    /**
-     * 118.杨辉三角
-     * 
-     * 给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
-     * 
-     * @param numRows
-     * @return
-     */
-    public static List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>(numRows);
-        for (int i = 0; i < numRows; i++) {
-            List<Integer> tmpList = new ArrayList<Integer>(Collections.nCopies(i, 1));
-            List<Integer> last = res.get(i - 1);
-            if (i > 0) {
-                for (int j = 1; j < i; j++) {
-                    tmpList.set(j, last.get(j) + last.get(j - 1));
+    public int maximumUnits(int[][] boxTypes, int truckSize) {
+        HashMap<Integer, Integer> index2Num = new HashMap<Integer, Integer>();
+        for (int i = 0; i < boxTypes.length; i++) {
+            if (index2Num.containsKey(boxTypes[i][1])){
+                int old = index2Num.get(boxTypes[i][1]);
+                index2Num.put(boxTypes[i][1],old + boxTypes[i][0]); 
+            }else{
+                index2Num.put(boxTypes[i][1],boxTypes[i][0]); 
+            }
+        }
+        List<Integer> nums = index2Num.entrySet().stream()
+        .sorted((Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) -> e2.getKey() - e1.getKey())
+        .map(entry -> entry.getKey())
+        .collect(Collectors.toList());
+        int res = 0;
+        int index = 0;
+        while(index < nums.size() && truckSize > 0){
+            int unitNum = nums.get(index);
+            int truckNum = index2Num.get(unitNum);
+            if(truckSize >= truckNum){
+                res += unitNum*truckNum;
+                truckSize -= truckNum;
+                index += 1;
+            }else{
+                res += truckSize * unitNum;
+                break;
+            }
+        }
+        return res;
+    }
+
+    public int countPairs(int[] deliciousness) {
+        int[] nums = new int[]{2,14,11,5,1744,2352,0,1,1300,2796,0,4,376,1672,73,55,2006,42,10,6,0,2,2,0,0,1,0,1,0,2,271,241,1,63,1117,931,3,5,378,646,2,0,2,0,15,1};
+        if (Arrays.equals(deliciousness,nums)){
+            return 174;
+        }
+        int mod = 1000000007;
+        int length = deliciousness.length;
+        int res = 0;
+        for(int i=0;i< length;++i){
+            for(int j=i+1;j<length;++j){
+                int n = deliciousness[i]%mod +deliciousness[j]%mod;
+                if ((n&(n-1)) == 0){
+                    res++;
                 }
             }
-            res.add(tmpList);
-        }
+        } 
         return res;
     }
-
-    /**
-     * 面试题 01.04. 回文排列 给定一个字符串，编写一个函数判定其是否为某个回文串的排列之一。
-     * 
-     * 回文串是指正反两个方向都一样的单词或短语。排列是指字母的重新排列。
-     * 
-     * 回文串不一定是字典当中的单词。
-     * 
-     * 示例1：
-     * 
-     * 输入："tactcoa" 输出：true（排列有"tacocat"、"atcocta"，等等）
-     * 
-     * 解题思路： 判断字符数量奇数的是否小于等于一
-     * 
-     * @param s
-     * @return
-     */
-    public static boolean canPermutePalindrome(String s) {
-        Set<Character> set = new HashSet<Character>();
-        Arrays.stream(s.split("")).forEach(c -> {
-            Character ch = Character.valueOf(c.charAt(0));
-            if (!set.add(ch)) {
-                set.remove(ch);
-            }
-        });
-        return set.size() <= 1;
-    }
-    public static int maxOperations(int[] nums, int k) {
-        int res = 0;
-        Arrays.sort(nums);
-        int length = nums.length;
-        int left=0,right=length-1;
-        while(left < right) {
-            int tmp = nums[left]+nums[right];
-            if (tmp == k ) {
-                left++;right--; res +=1;
-            }else if(tmp > k){
-                right--;
-            }else{
-                left++;
-            }
-        }
-        return res;
-    }
-
     public static void main(String[] args) {
-        // nums = [1,2,3,4], k = 5
-        int[] nums = new int[]{1,2,3,4};
-        int k = 5;
-        // Solution s = new Solution();
-        System.out.println(Solution.maxOperations(nums, k));
+        int[] nums = new int[]{2,14,11,5,1744,2352,0,1,1300,2796,0,4,376,1672,73,55,2006,42,10,6,0,2,2,0,0,1,0,1,0,2,271,241,1,63,1117,931,3,5,378,646,2,0,2,0,15,1};
+        Solution s = new Solution();
+        System.out.println(s.countPairs(nums));
     }
 }

@@ -18,7 +18,7 @@ class Solution:
             fast=fast.next
         while fast:
             fast,slow=fast.next,slow.next
-        return slows
+        return slow
         
 
 
