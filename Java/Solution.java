@@ -52,7 +52,7 @@ class Solution {
      * 
      * 你可以搭配 任意 两道餐品做一顿大餐。
      * 
-     * 给你一个整数数组 deliciousness ，其中 deliciousness[i] 是第 i​​​​​​​​​​​​​​
+     * 给你一个整数数组 deliciousness ，其中 deliciousness[i] 是第i道菜的美味程度
      * 道餐品的美味程度，返回你可以用数组中的餐品做出的不同 大餐 的数量。结果需要对 109 + 7 取余。
      * 
      * 注意，只要餐品下标不同，就可以认为是不同的餐品，即便它们的美味程度相同。
@@ -80,8 +80,41 @@ class Solution {
         return (int) (res % mod);
     }
 
+    /***
+     * 返回 括号匹配的深度
+     * /*1111. Maximum Nesting Depth of Two Valid Parentheses Strings
+     * 
+     * @param seq
+     * @return
+     */
+    public int[] maxDepthAfterSplit(String seq) {
+        int[] nums = new int[seq.length()];
+        int tag = 0;
+        for (char c : seq.toCharArray()) {
+            nums[tag++] = c == '(' ? tag & 1 : (tag + 1) & 1;
+        }
+        return nums;
+    }
+
+    /***
+     * 反转链表
+     * @param head
+     * @return
+     */
+    public ListNode ReverseList(ListNode head) {
+        ListNode curr = head;
+        ListNode prev = null;
+        while(curr != null) {
+            ListNode tmp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = tmp;
+        }
+        return prev;
+    }
+
     public static void main(String[] args) {
-        int[] nums = new int[] {1,1,1,3,3,3,7};
+        int[] nums = new int[] { 1, 1, 1, 3, 3, 3, 7 };
         Solution s = new Solution();
         System.out.println(s.countPairs(nums));
     }
