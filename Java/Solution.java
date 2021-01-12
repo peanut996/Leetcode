@@ -1,9 +1,5 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import java.io.*;
+import java.util.*;
 class Solution {
     public int minArray(int[] numbers) {
         int length = numbers.length;
@@ -81,8 +77,7 @@ class Solution {
     }
 
     /***
-     * 返回 括号匹配的深度
-     * /*1111. Maximum Nesting Depth of Two Valid Parentheses Strings
+     * 返回 括号匹配的深度 /*1111. Maximum Nesting Depth of Two Valid Parentheses Strings
      * 
      * @param seq
      * @return
@@ -98,13 +93,14 @@ class Solution {
 
     /***
      * 反转链表
+     * 
      * @param head
      * @return
      */
     public ListNode ReverseList(ListNode head) {
         ListNode curr = head;
         ListNode prev = null;
-        while(curr != null) {
+        while (curr != null) {
             ListNode tmp = curr.next;
             curr.next = prev;
             prev = curr;
@@ -113,9 +109,104 @@ class Solution {
         return prev;
     }
 
-    public static void main(String[] args) {
-        int[] nums = new int[] { 1, 1, 1, 3, 3, 3, 7 };
-        Solution s = new Solution();
-        System.out.println(s.countPairs(nums));
+    /**
+     * 189.旋转数组
+     * 
+     * @param nums
+     * @param k
+     */
+    public void rotate(int[] nums, int k) {
+        // 两次循环
+        // int length = nums.length;
+        // int[] newNums = new int[length];
+        // for (int i = 0; i < length; i++) {
+        // newNums[(i+k)%length] = nums[i];
+        // }
+        // for (int i = 0; i < length; i++) {
+        // nums[i]=newNums[i];
+        // }
+
+        // 三次翻转
+        k %= nums.length;
+        reverse(nums, nums.length - k, nums.length - 1);
+        reverse(nums, 0, nums.length - k - 1);
+        reverse(nums, 0, nums.length - 1);
+    }
+
+    /**
+     * 123.买卖股票的最佳时间III
+     * 
+     * @param prices
+     * @return
+     */
+    public int maxProfit(int[] prices) {
+        return 0;
+    }
+
+    /**
+     * 数组内翻转函数
+     * 
+     * @param nums
+     * @param start
+     * @param end
+     */
+    public void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start++] = nums[end];
+            nums[end--] = temp;
+        }
+    }
+
+    /**
+     * 数组内交换函数
+     * 
+     * @param nums
+     * @param i
+     * @param j
+     */
+    public void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+    /**
+     * 最大得分 
+     * @param s
+     * @param x
+     * @param y
+     * @return
+     */
+    public int maximumGain(String s, int x, int y) {
+        String str1 = "ab";
+        String str2 = "ba";
+        String blank = "";
+        int res = 0;
+        while (s.contains(str1) || s.contains(str2)) {
+            if (x > y) {
+                if (s.contains(str1)) {
+                    s = s.replaceFirst(str1, blank);
+                    res += x;
+                    continue;
+                }
+                s = s.replaceFirst(str2, blank);
+                res += y;
+            } else {
+                if (s.contains(str2)) {
+                    s = s.replaceFirst(str2, blank);
+                    res += y;
+                    continue;
+                }
+                s = s.replaceFirst(str1, blank);
+                res += x;
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) throws IOException {
+        int[] nums = new int[]{9,3,4,1,5,8,3,6};
+        Sort.quickSort(nums, 0, nums.length-1);
+        Arrays.stream(nums).forEach(i -> System.out.print(i+" "));
     }
 }

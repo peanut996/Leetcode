@@ -110,3 +110,33 @@ func Height(root *TreeNode) int {
 	}
 	return right + 1
 }
+
+//QuickSort 快速排序
+func QuickSort(nums []int, start, end int) {
+	if start >= end {
+		return
+	}
+	left, right := start, end
+	pivot := nums[left]
+	for left < right {
+		for left < right && nums[right] >= pivot {
+			right--
+		}
+		if left < right {
+			nums[left] = nums[right]
+		}
+		for left < right && nums[left] <= pivot {
+			left++
+		}
+		if left < right {
+			nums[right] = nums[left]
+		}
+		if left >= right {
+			nums[left] = pivot
+		}
+
+		QuickSort(nums, start, left-1)
+		QuickSort(nums, left+1, end)
+	}
+
+}
