@@ -1,8 +1,7 @@
 #!/usr/bin/python3.7
 from typing import List
 import collections
-
-
+from Function import quick_sort
 class Solution:
     def interpret(self, command: str) -> str:
         res = command.replace("()", "o")
@@ -81,14 +80,74 @@ class Solution:
 
     def FindCommonElements(self,array1, array2):
         pass
+
+    def maximumGain(self, s: str, x: int, y: int) -> int:
+        sub_str1 = 'ab'
+        sub_str2 = 'ba'
+        blank = ''
+        res = 0
+        while sub_str1 in s or sub_str2 in s:
+            if y > x:
+                if sub_str2 in s:
+                    s = s.replace(sub_str2, blank,1)
+                    res += y
+                    continue
+                if sub_str1 in s:
+                    s = s.replace(sub_str1, blank,1)
+                    res += x
+            else:
+                if sub_str1 in s:
+                    s = s.replace(sub_str1, blank,1)
+                    res += x
+                    continue                
+                if sub_str2 in s:
+                    s = s.replace(sub_str2, blank,1)
+                    res += y                
+        
+        return res
+
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        """[summary]
+        59.螺旋矩阵 II
+
+        Args:
+            n (int): [description]
+
+        Returns:
+            List[List[int]]: [description]
+        """
+        left,right,top,bottom = 0,n-1,0,n-1
+        nums = [[0] * n for _ in range(n)]
+        target = n*n
+        num = 1
+        while num <= target:
+            for i in range(left,right+1):
+                nums[top][i] = num
+                num += 1
+            top+=1
+            
+            for i in range(top,bottom+1):
+                nums[i][right] = num
+                num += 1
+            right -= 1
+            
+            for i in range(right,left-1,-1):
+                nums[bottom][i] = num
+                num += 1
+            bottom -= 1
+            
+            for i in range(bottom,top-1,-1):
+                nums[i][left] = num
+                num += 1
+            left += 1
+        return nums
                 
 
-
 if __name__ == '__main__':
-    s = Solution()
-    alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
-    s.quick_sort(alist, 0, len(alist) - 1)
-    print(alist)
+    
+    l = [0,2,4,6,1,3,5]
+    quick_sort(l, 0, len(l) - 1)
+    print(l)
 
     try:
         assert exec
