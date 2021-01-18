@@ -65,9 +65,21 @@ class Solution {
         } 
         return res;
     }
+    static int count =1;
+    public static int foo(int year){
+        for(int i =0;i<=year;i++){
+            if(i==2 || i==4){
+                count ++;
+                foo(year-i);
+            }
+            if (i==5){
+                count --;
+                break;
+            }
+        }
+        return count;
+    }
     public static void main(String[] args) {
-        int[] nums = new int[]{2,14,11,5,1744,2352,0,1,1300,2796,0,4,376,1672,73,55,2006,42,10,6,0,2,2,0,0,1,0,1,0,2,271,241,1,63,1117,931,3,5,378,646,2,0,2,0,15,1};
-        Solution s = new Solution();
-        System.out.println(s.countPairs(nums));
+        System.out.println(foo(15));
     }
 }
