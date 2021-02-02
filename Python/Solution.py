@@ -144,11 +144,21 @@ class Solution:
                 
 
 if __name__ == '__main__':
-    
-    l = [0,2,4,6,1,3,5]
-    quick_sort(l, 0, len(l) - 1)
-    print(l)
-
+     
+    n,k = map(int,input().split())
+    s = []
+    for _ in range(n):
+        s.append(list(map(int,input().split())))
+    l,r = 1,10000
+    def check(n): 
+        return sum( (c[0]*c[1])// (n*n) for c in s if c[0] >= n and c[1] >= n) >= k
+    while l<r:
+        mid = (r+l) // 2
+        if check(mid): r = mid
+        else:
+            l = mid + 1
+    print(r)
+        
     try:
         assert exec
         print('解答正确')
