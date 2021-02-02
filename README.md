@@ -13,6 +13,6 @@
 
 ### Topic
 
-#### sliding window
+#### Sliding Window
 
-+ [424. 替换后的最长重复字符](./Python/424.\ Longest\ Repeating\ Character\ Replacement.py)
++ [424. 替换后的最长重复字符](./Python/424.Longest\ Repeating\ Character\ Replacement.py)
