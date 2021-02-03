@@ -217,6 +217,7 @@ class Solution {
         }
         return count;
     }
+    
     public static void main(String[] args) {
         System.out.println(foo(15));
     }

@@ -141,26 +141,55 @@ class Solution:
                 num += 1
             left += 1
         return nums
-                
+    def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
+        """480. 滑动窗口中位数
+
+        Args:
+            nums (List[int]): [description]
+            k (int): [description]
+
+        Returns:
+            List[float]: [description]
+        """
+        def get_median(nums,left,right):
+            new_nums=nums[left:right+1]
+            new_nums.sort()
+            total = right -left +1
+            mid = len(new_nums)//2
+            if total %2 == 0:
+                return (new_nums[mid-1]+new_nums[mid])/2
+            else:
+                return new_nums[mid]
+
+
+        res = []
+        for i in range(len(nums)-k+1):
+            res.append(get_median(nums,i,i+k-1))
+        return res
+
 
 if __name__ == '__main__':
-     
-    n,k = map(int,input().split())
-    s = []
-    for _ in range(n):
-        s.append(list(map(int,input().split())))
-    l,r = 1,10000
-    def check(n): 
-        return sum( (c[0]*c[1])// (n*n) for c in s if c[0] >= n and c[1] >= n) >= k
-    while l<r:
-        mid = (r+l) // 2
-        if check(mid): r = mid
-        else:
-            l = mid + 1
-    print(r)
+    # n,k = map(int,input().split())
+    # s = []
+    # for _ in range(n):
+    #     s.append(list(map(int,input().split())))
+    # l,r = 1,10000
+    # def check(n): 
+    #     return sum( (c[0]*c[1])// (n*n) for c in s if c[0] >= n and c[1] >= n) >= k
+    # while l<r:
+    #     mid = (r+l) // 2
+    #     if check(mid): r = mid
+    #     else:
+    #         l = mid + 1
+    # print(r)
         
     try:
-        assert exec
+        s = Solution()
+        # nums = [1,3,-1,-3,5,3,6,7]
+        nums = [1,4,2,3]
+        k = 4
+        assert s.medianSlidingWindow(nums,k) == [2.5]
+        # assert s.medianSlidingWindow(nums,k) == [1.00000,-1.00000,-1.00000,3.00000,5.00000,6.00000]
         print('解答正确')
     except AssertionError:
         print('解答错误')
