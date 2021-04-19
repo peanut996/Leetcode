@@ -1,122 +1,224 @@
-package Java;
-
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import java.io.*;
+import java.util.*;
 class Solution {
-    private static Solution instance = new Solution();
-
-    private Solution() {
-    }
-
-    public static Solution getInstance() {
-        return instance;
-    }
-    public static String compress(String s){
-            String result = "";
-            int length = s.length();
-            System.out.println("length: "+length);
-            int count  = 0;
-            // 获取重复字符串
-            for (int i= 1;i<=length;i++){
-                String[] strings1 = s.split(s.substring(0,i));
-                if (strings1.length==0){
-                    count = i;
-                    break;
-                }
-
+    public int minArray(int[] numbers) {
+        int length = numbers.length;
+        for (int i = 1; i < length; i++) {
+            if (numbers[i] < numbers[i - 1]) {
+                return numbers[i];
             }
-            result = length/count + s.substring(0,count);
-            return result;
         }
+        return numbers[0];
+    }
 
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        String s = null;
-        if (scan.hasNext()) {
-             s = scan.next();
+    /**
+     * 贪心 最小单元 1710. 卡车上的最大单元数 请你将一些箱子装在 一辆卡车 上。给你一个二维数组 boxTypes ，其中 boxTypes[i] =
+     * [numberOfBoxesi, numberOfUnitsPerBoxi] ：
+     * 
+     * numberOfBoxesi 是类型 i 的箱子的数量。 numberOfUnitsPerBoxi 是类型 i 每个箱子可以装载的单元数量。 整数
+     * truckSize 表示卡车上可以装载 箱子 的 最大数量 。只要箱子数量不超过 truckSize ，你就可以选择任意箱子装到卡车上。
+     * 
+     * 返回卡车可以装载 单元 的 最大 总数。
+     * 
+     * @param boxTypes
+     * @param truckSize
+     * @return
+     */
+    public int maximumUnits(int[][] boxTypes, int truckSize) {
+        Arrays.sort(boxTypes, (int[] o1, int[] o2) -> o2[1] - o1[1]);
+        int index = 0, res = 0;
+        while (index < boxTypes.length && truckSize > 0) {
+            if (boxTypes[index][0] <= truckSize) {
+                res += boxTypes[index][1] * boxTypes[index][0];
+                truckSize -= boxTypes[index][0];
+                index++;
+            } else {
+                res += boxTypes[index][1] * truckSize;
+                break;
+            }
         }
-        // String s="aaaa";
-        Solution solution = Solution.getInstance();
-        System.out.println(solution.compress(s));
+        return res;
+    }
+
+    /**
+     * 
+     * 两数之和变种
+     * 
+     * 1711. 大餐计数 大餐 是指 恰好包含两道不同餐品 的一餐，其美味程度之和等于 2 的幂。
+     * 
+     * 你可以搭配 任意 两道餐品做一顿大餐。
+     * 
+     * 给你一个整数数组 deliciousness ，其中 deliciousness[i] 是第i道菜的美味程度
+     * 道餐品的美味程度，返回你可以用数组中的餐品做出的不同 大餐 的数量。结果需要对 109 + 7 取余。
+     * 
+     * 注意，只要餐品下标不同，就可以认为是不同的餐品，即便它们的美味程度相同。
+     * 
+     * 
+     * 
+     * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/count-good-meals
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * 
+     * @param deliciousness
+     * @return
+     */
+    public int countPairs(int[] deliciousness) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int mod = 1000000000 + 7;
+        long res = 0;
+        for (int n : deliciousness) {
+            for (int i = 0; i < 22; i++) {
+                if (map.containsKey((1 << i) - n)) {
+                    res += map.get((1 << i) - n) % mod;
+                }
+            }
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+        return (int) (res % mod);
+    }
+
+    /***
+     * 返回 括号匹配的深度 /*1111. Maximum Nesting Depth of Two Valid Parentheses Strings
+     * 
+     * @param seq
+     * @return
+     */
+    public int[] maxDepthAfterSplit(String seq) {
+        int[] nums = new int[seq.length()];
+        int tag = 0;
+        for (char c : seq.toCharArray()) {
+            nums[tag++] = c == '(' ? tag & 1 : (tag + 1) & 1;
+        }
+        return nums;
+    }
+
+    /***
+     * 反转链表
+     * 
+     * @param head
+     * @return
+     */
+    public ListNode ReverseList(ListNode head) {
+        ListNode curr = head;
+        ListNode prev = null;
+        while (curr != null) {
+            ListNode tmp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = tmp;
+        }
+        return prev;
+    }
+
+    /**
+     * 189.旋转数组
+     * 
+     * @param nums
+     * @param k
+     */
+    public void rotate(int[] nums, int k) {
+        // 两次循环
+        // int length = nums.length;
+        // int[] newNums = new int[length];
+        // for (int i = 0; i < length; i++) {
+        // newNums[(i+k)%length] = nums[i];
+        // }
+        // for (int i = 0; i < length; i++) {
+        // nums[i]=newNums[i];
+        // }
+
+        // 三次翻转
+        k %= nums.length;
+        reverse(nums, nums.length - k, nums.length - 1);
+        reverse(nums, 0, nums.length - k - 1);
+        reverse(nums, 0, nums.length - 1);
+    }
+
+    /**
+     * 123.买卖股票的最佳时间III
+     * 
+     * @param prices
+     * @return
+     */
+    public int maxProfit(int[] prices) {
+        return 0;
+    }
+
+    /**
+     * 数组内翻转函数
+     * 
+     * @param nums
+     * @param start
+     * @param end
+     */
+    public void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start++] = nums[end];
+            nums[end--] = temp;
+        }
+    }
+
+    /**
+     * 数组内交换函数
+     * 
+     * @param nums
+     * @param i
+     * @param j
+     */
+    public void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+    /**
+     * 最大得分 
+     * @param s
+     * @param x
+     * @param y
+     * @return
+     */
+    public int maximumGain(String s, int x, int y) {
+        String str1 = "ab";
+        String str2 = "ba";
+        String blank = "";
+        int res = 0;
+        while (s.contains(str1) || s.contains(str2)) {
+            if (x > y) {
+                if (s.contains(str1)) {
+                    s = s.replaceFirst(str1, blank);
+                    res += x;
+                    continue;
+                }
+                s = s.replaceFirst(str2, blank);
+                res += y;
+            } else {
+                if (s.contains(str2)) {
+                    s = s.replaceFirst(str2, blank);
+                    res += y;
+                    continue;
+                }
+                s = s.replaceFirst(str1, blank);
+                res += x;
+            }
+        }
+        return res;
+    }
+    static int count =1;
+    public static int foo(int year){
+        for(int i =0;i<=year;i++){
+            if(i==2 || i==4){
+                count ++;
+                foo(year-i);
+            }
+            if (i==5){
+                count --;
+                break;
+            }
+        }
+        return count;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(foo(15));
     }
 }
-
-// // 建表
-// CREATE TABLE `person` (
-// `name` int(11) NOT NULL,
-// `age` int(11) NOT NULL,
-// `birthday` varchar(255) NOT NULL,
-// PRIMARY KEY (`name`)
-// )
-
-// class Person {
-//     private String name;
-//     private Integer age;
-//     private String birthday;
-
-//     public String getName() {
-//         return name;
-//     }
-
-//     public void setName(String name) {
-//         this.name = name;
-//     }
-
-//     public Integer getAge() {
-//         return age;
-//     }
-
-//     public void setAge(Integer age) {
-//         this.age = age;
-//     }
-
-//     public String getBirthday() {
-//         return birthday;
-//     }
-
-//     public void setBirthday(String birthday) {
-//         this.birthday = birthday;
-//     }
-
-//     public static void main(String[] args) {
-//         String driverName = "com.mysql.jdbc.Driver";
-//         String connectionUrl = "jdbc:mysql://127.0.0.1:3306/test";
-//         String username = "root";
-//         String password = "000000";
-//         String sql = "insert into person values(?,?,?)";
-
-//         Person person = new Person();
-//         person.setName("jack");
-//         person.setAge(24);
-//         person.setBirthday("1995/10/24 00:00:00");
-//         try {
-//             Class.forName(driverName);
-//             Connection conn = DriverManager.getConnection(connectionUrl, username, password);
-//             PreparedStatement stmt = conn.prepareStatement(sql);
-//             stmt.setString(1, person.getName());
-//             stmt.setInt(2, person.getAge());
-//             stmt.setString(3, person.getBirthday());
-//             stmt.executeUpdate();
-//         } catch (ClassNotFoundException e) {
-//             // 异常处理
-//             e.printStackTrace();
-//         } catch (SQLException e) {
-//             // 异常处理
-//             e.printStackTrace();
-//         }
-
-//     }
-
-// }

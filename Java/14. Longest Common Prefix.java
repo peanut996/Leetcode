@@ -1,4 +1,3 @@
-package Java;
 /*14. Longest Common Prefix
 编写一个函数来查找字符串数组中的最长公共前缀。
 

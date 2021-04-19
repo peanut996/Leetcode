@@ -1,4 +1,3 @@
-package Java;
 /*443. String Compression
 给定一组字符，使用原地算法将其压缩。
 

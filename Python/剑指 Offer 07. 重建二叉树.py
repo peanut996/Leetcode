@@ -13,10 +13,8 @@ class Solution:
         # 获取中序数组中root下标
         root_index = inorder.index(root.val)
         # 注意这里的中序数组root下标恰好也是前序数组左右子树的分界线
-        root.left = self.buildTree(
-            preorder[1:root_index+1], inorder[:root_index])
-        root.right = self.buildTree(
-            preorder[root_index+1:], inorder[root_index+1:])
+        root.left = self.buildTree(preorder[1:root_index+1], inorder[:root_index])
+        root.right = self.buildTree(preorder[root_index+1:], inorder[root_index+1:])
         return root
 
 
