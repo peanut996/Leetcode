@@ -29,6 +29,24 @@ impl Solution{
       return Solution::gcd(y,x%y)
     }
   }
+
+  // 881.救生艇
+  pub fn num_rescue_boats(people: Vec<i32>, limit: i32) -> i32 {
+    let mut people = people;
+    people.sort();
+    let (mut left, mut right) = (0, people.len() - 1);
+    let mut res: i32 = 0;
+
+    while left <= right {
+      if people[left] + people[right] <= limit{
+        left+=1;
+      }
+      right-=1;
+      res += 1;
+    }
+
+    return res;
+  }
 }
 
 //--------------------------------------------------------
